@@ -17,7 +17,7 @@ public interface RatingService {
 	
 	Collection<Rating> getRating();
 	
-	Rating getRatingBytitle(String titleRating);
+	Collection<Rating> getRatingBytitle(String titleRating);
 	
 	String sayRest();
 }

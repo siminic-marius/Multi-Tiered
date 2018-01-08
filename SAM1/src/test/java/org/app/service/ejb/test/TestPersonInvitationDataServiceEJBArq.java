@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.app.service.entities.Invitation;
+import org.app.service.entities.Invitatie;
 import org.app.service.entities.Persoane;
 
 
@@ -49,6 +49,14 @@ public class TestPersonInvitationDataServiceEJBArq {
 	private static PersonInvitationDataService service;
 	
 	@Test
+	public void test1_GetMessage() {
+		logger.info("DEBUG: Junit TESTING: testGetMessage ...");
+		String response = service.getMessage();
+		assertNotNull("Data Service failed!", response);
+		logger.info("DEBUG: EJB Response ..." + response);
+	}
+	
+	@Test
 	public void test4_getPerson() {
 		logger.info("DEBUG: Junit TESTING: testGetPerson:121  ...");
 		Persoane persoane = service.getById(121);
@@ -58,13 +66,14 @@ public class TestPersonInvitationDataServiceEJBArq {
 	@Test
 	public void test3_createPerson() {
 		Persoane persoane = service.addNewPerson(121);
+		
 		assertNotNull("Fail to create new person in repository!'", persoane);
 		//update project
-		persoane.setName(persoane.getName() + "- I changed something");
-		List<Invitation> invitatii = persoane.getInvitatii();
+		persoane.setName(persoane.getName() + " Married");
+		List<Invitatie> invitatii = persoane.getInvitatii();
 		
-		for(Invitation i: invitatii) {
-			i.setMessage(i.getMessage() + "Some new message " + i);
+		for(Invitatie i: invitatii) {
+			i.setMessageInvitatie(i.getMessageInvitatie() + " Happy Holidays!");
 		}
 		persoane = service.add(persoane);
 		assertNotNull("Fail to save new person in repository!'", persoane);

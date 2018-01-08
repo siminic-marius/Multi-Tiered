@@ -7,42 +7,43 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import org.app.patterns.EntityRepository;
 import org.app.patterns.EntityRepositoryBase;
 import org.app.service.entities.Event;
-import org.app.service.entities.Invitation;
-import org.app.service.entities.Persoane;
-import org.app.service.entities.Rating;
+import org.app.service.entities.Invitatie;
 
 @Stateless @LocalBean
 public class EventInvitationDataServiceEJB extends EntityRepositoryBase<Event> implements EventInvitationDataService, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3275701352285396487L;
+
 	private static Logger logger = Logger.getLogger(EventInvitationDataServiceEJB.class.getName());
 	
-	@EJB
-	private InvitationService invitationService;
-	
-	private EntityRepository<Invitation> invitationRepository;
+	private EntityRepository<Invitatie> invitationRepository;
 	
 	@PostConstruct
 	public void init() {
-		invitationRepository = new EntityRepositoryBase<Invitation>(this.em, Invitation.class);
+		invitationRepository = new EntityRepositoryBase<Invitatie>(this.em, Invitatie.class);
 		logger.info("POSTCONSTRUCT-INIT invitationRepository: " + this.invitationRepository);
 	}
 	@Override
 	public Event createNewEvent(Integer Id) {
 		//create event aggregate
-		Event event = new Event (Id, "New event" + "." + Id, new Date());
-		List<Invitation> invitationEvent = new ArrayList<>();
+		Date startDate = new Date();
+		Long interval =  12l * 30  * 24  * 60  * 60  * 1000;
+		Event event = new Event (Id, "Event: " + (Id + 100), "Event: Iasi: " + (Id + 100), 
+				new Date(startDate.getTime() + 4 * interval), "Event -- " + (Id + 100), 150 + Id);
+		List<Invitatie> invitationEvent = new ArrayList<>();
 		Date invitationDate = new Date();
-		Long interval = 30l /*zile*/ * 24 /*ore*/ * 60 /*min*/ * 60 /*sec*/ * 1000 /*milisec*/;
 		Integer ratingCount = 5;
 		for(int i = 0; i < ratingCount -1; i++) {
-			invitationEvent.add(new Invitation(null, "Rat:" + event.getEventID() + "." + i, new Date (invitationDate.getTime() + i * interval), event));
+			invitationEvent.add(new Invitatie(650 + i, "Invt:" + event.getEventID() + "/" + i, "Come to our Christmas party " + i, new Date (invitationDate.getTime() + i * interval), event, null));
 		}
 		event.setInvitatie(invitationEvent);
 		//saveAggregate
@@ -53,8 +54,9 @@ public class EventInvitationDataServiceEJB extends EntityRepositoryBase<Event> i
 	}
 
 	@Override
-	public Invitation getInvitationById(Integer invitationId) {
+	public Invitatie getInvitationById(Integer invitationId) {
 		// TODO Auto-generated method stub
+		
 		return invitationRepository.getById(invitationId);
 	}
 

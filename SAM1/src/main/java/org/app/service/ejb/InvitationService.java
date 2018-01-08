@@ -1,22 +1,12 @@
 package org.app.service.ejb;
 
-import java.util.Collection;
-
 import javax.ejb.Remote;
 
-import org.app.service.entities.Invitation;
+import org.app.patterns.EntityRepository;
+import org.app.service.entities.Invitatie;
 
 @Remote
-public interface InvitationService {
-	Invitation AddInvitation(Invitation invitationToAdd);
-	
-	String removeInvitation(Invitation invitationToDelete);
-	
-	Invitation getInvitationByidInvitation (Integer idInvitation);
-	
-	Collection<Invitation> getInvitation();
-	
-	Invitation getInvitationByTitle(String invitationTitle);
-	
+public interface InvitationService extends EntityRepository<Invitatie>{
+		
 	String sayRest();
 }

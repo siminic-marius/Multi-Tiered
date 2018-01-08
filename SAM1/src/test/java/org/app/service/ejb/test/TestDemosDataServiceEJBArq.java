@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 
@@ -51,20 +52,23 @@ private static Logger logger = Logger.getLogger(TestDemosDataServiceEJBArq.class
 	}
 	
 	@Test
-	public void test2_getDemos() {
+	public void test4_getDemos() {
 		logger.info("DEBUG: Junit TESTING: testGetDemos");
 		
 		Collection<Demos> demos = service.getDemos();
-		assertTrue("Fail to read Demos!", demos.size() == 0);
+		assertTrue("Fail to read Demos!", demos.size() > 0);
 	}
 	
 	@Test
 	public void test3_addDemos() {
 		logger.info("DEBUG Junit TESTING: testAddDemos...");
+		Date startDate = new Date();
+		Long interval = 30l /*zile*/ * 24 /*ore*/ * 60 /*min*/ * 60 /*sec*/ * 1000 /*milisec*/;
 		
 		Integer demosToAdd = 5;
 		for(int i = 0; i < demosToAdd; i++) {
-			service.AddDemos(new Demos(251 + i, "asasda" + (90+i), "asadasdasdasd" + (80 + i), 10.0 + i));
+			service.AddDemos(new Demos( 100 + i, "Event: Demo " + (90 + i), "Event: Demo: Iasi " + (i), new Date(startDate.getTime() + i * interval), "Event: Demo For Product", 150,
+					1090 + i, "Demo For Product " + (90 + i), " Product: " + (90 + i), 10.0 + i));
 		}
 		
 		Collection<Demos> demos = service.getDemos();
@@ -72,7 +76,7 @@ private static Logger logger = Logger.getLogger(TestDemosDataServiceEJBArq.class
 	}
 	
 	@Test
-	public void test4_deleteDemos() {
+	public void test2_deleteDemos() {
 		logger.info("DEBUG: Junit TESTING: testDeleteDemos...");
 		
 		Collection<Demos> demos = service.getDemos();

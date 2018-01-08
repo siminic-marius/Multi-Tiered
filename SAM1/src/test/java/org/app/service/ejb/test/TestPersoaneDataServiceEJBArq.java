@@ -1,4 +1,6 @@
 package org.app.service.ejb.test;
+import org.app.patterns.EntityRepository;
+import org.app.patterns.EntityRepositoryBase;
 import org.app.service.ejb.PersoaneService;
 import org.app.service.ejb.PersoaneServiceEJB;
 import org.app.service.entities.Persoane;
@@ -37,9 +39,10 @@ public class TestPersoaneDataServiceEJBArq {
 				.addPackage(Persoane.class.getPackage())
 				.addClass(PersoaneService.class)
 				.addClass(PersoaneServiceEJB.class)
+				.addClass(EntityRepository.class)
+				.addClass(EntityRepositoryBase.class)
 				.addAsResource("META-INF/persistence.xml")
-				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-				
+				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");	
 	}
 	
 	@Test
@@ -51,11 +54,11 @@ public class TestPersoaneDataServiceEJBArq {
 	}
 	
 	@Test
-	public void test2_getPersoane() {
+	public void test4_getPersoane() {
 		logger.info("DEBUG: Junit TESTING: testGetPersoane");
 		
-		Collection<Persoane> persoane = service.getPersoane();
-		assertTrue("Fail to read persoane!", persoane.size() == 0);
+		Collection<Persoane> persoane = service.toCollection();
+		assertTrue("Fail to read persoane!", persoane.size() > 0);
 	}
 	
 	@Test
@@ -63,23 +66,29 @@ public class TestPersoaneDataServiceEJBArq {
 		logger.info("DEBUG Junit TESTING: testAddPersoana ...");
 		
 		Integer personToAdd = 5;
+		String sexChoice = "";
 		for(int i = 0; i < personToAdd; i++) {
-			service.AddPersoana(new Persoane(null, "asasda" + (90+i), "asadasdasdasd" + (80 + i), "azzzzzz" + (50 + i), "zzzzzxx" + (10 + i)));
+			if(i%2 == 0) {
+				sexChoice = "M"; 
+			} else {
+				sexChoice = "F";
+			}
+			service.add(new Persoane(i + 111, "Persoana: " + (115+i), "Iasi: " + (80 + i), sexChoice, "persoana" + (10 + i) + "@gmail.com"));
 		}
 		
-		Collection<Persoane> persons = service.getPersoane();
+		Collection<Persoane> persons = service.toCollection();
 		assertTrue("Fail to add a new person!", persons.size() == personToAdd);
 	}
 	
 	@Test
-	public void test4_deletePersoana() {
+	public void test2_deletePersoana() {
 		logger.info("DEBUG: Junit TESTING: testDeletePersoana ...");
 		
-		Collection<Persoane> persoane = service.getPersoane();
+		Collection<Persoane> persoane = service.toCollection();
 		for(Persoane p: persoane) {
-			service.removePersoane(p);
+			service.remove(p);
 		}
-		Collection<Persoane> persoaneAfterDelete = service.getPersoane();
+		Collection<Persoane> persoaneAfterDelete = service.toCollection();
 		assertTrue("Fail to read persoane!", persoaneAfterDelete.size() == 0);
 	}
 	

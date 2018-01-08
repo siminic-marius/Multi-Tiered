@@ -1,11 +1,15 @@
 package org.app.service.ejb.test;
+import org.app.patterns.EntityRepository;
+import org.app.patterns.EntityRepositoryBase;
 import org.app.service.ejb.InvitationService;
 import org.app.service.ejb.InvitationServiceEJB;
-import org.app.service.entities.Invitation;
+import org.app.service.entities.Invitatie;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 
@@ -33,9 +37,11 @@ public class TestInvitationDataServiceEJBArq {
 		public static Archive<?> createDeployment() {
 			return ShrinkWrap
 					.create(WebArchive.class, "msd-test.war")
-					.addPackage(Invitation.class.getPackage())
+					.addPackage(Invitatie.class.getPackage())
 					.addClass(InvitationService.class)
 					.addClass(InvitationServiceEJB.class)
+					.addClass(EntityRepository.class)
+					.addClass(EntityRepositoryBase.class)
 					.addAsResource("META-INF/persistence.xml")
 					.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");			
 		}
@@ -49,35 +55,53 @@ public class TestInvitationDataServiceEJBArq {
 		}
 		
 		@Test
-		public void test2_getInvitation() {
+		public void test4_getInvitation() {
 			logger.info("DEBUG: Junit TESTING: testGetPersoane");
 			
-			Collection<Invitation> invitations = service.getInvitation();
-			assertTrue("Fail to read invitations!", invitations.size() == 0);
+			Collection<Invitatie> invitations = service.toCollection();
+			assertTrue("Fail to read invitations!", invitations.size() > 0);
 		}
 		
 		@Test
 		public void test3_addInvitation() {
 			logger.info("DEBUG Junit TESTING: testAddPersoana ...");
 			
+			Date dataInvitatie = new Date();
+			
+			Long numar = 30l * 24 * 60 * 60 * 1000;
+			
+			Date dataEvent = new Date();
+			
+			String sexChoice="";
 			Integer invitationToAdd = 5;
 			for(int i = 0; i < invitationToAdd; i++) {
-				service.AddInvitation(new Invitation(null, "asasda" + (90+i), "asadasdasdasd" + (80 + i)));
+				if(i%2 == 0) {
+					sexChoice = "M"; 
+				} else {
+					sexChoice = "F";
+				}
+				
+//				service.add(new Invitatie(i, "Invitatie Event Number: " + (80+i), "We invite you to our event: " + (80 + i), new Date (dataInvitatie.getTime() + i * numar), 
+//						new Event(i, "Event: " + (i + 100), "Event: Iasi: " + (i + 100), new Date(dataEvent.getTime() + i * numar), "Event -- " + (i + 100), 150 + i), 
+//						new Persoane(i + 111, "Persoana: " + (115+i), "Iasi: " + (80 + i), sexChoice, "persoana" + (10 + i) + "@gmail.com")));
+				
+				service.add(new Invitatie(i, "Invitatie Event Number: " + (80+i), "We invite you to our event: " + (80 + i), new Date (dataInvitatie.getTime() + i * numar), 
+						null, null));
 			}
 			
-			Collection<Invitation> invitations = service.getInvitation();
+			Collection<Invitatie> invitations = service.toCollection();
 			assertTrue("Fail to add a new invitation!", invitations.size() == invitationToAdd);
 		}
 		
 		@Test
-		public void test4_deleteInvitation() {
+		public void test2_deleteInvitation() {
 			logger.info("DEBUG: Junit TESTING: testDeletePersoana ...");
 			
-			Collection<Invitation> invitations = service.getInvitation();
-			for(Invitation i: invitations) {
-				service.removeInvitation(i);
+			Collection<Invitatie> invitations = service.toCollection();
+			for(Invitatie i: invitations) {
+				service.remove(i);
 			}
-			Collection<Invitation> invitationsAfterDelete = service.getInvitation();
+			Collection<Invitatie> invitationsAfterDelete = service.toCollection();
 			assertTrue("Fail to read invitations!", invitationsAfterDelete .size() == 0);
 		}
 }

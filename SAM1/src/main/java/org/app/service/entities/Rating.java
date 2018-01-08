@@ -1,36 +1,56 @@
 package org.app.service.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 
 @XmlRootElement(name="rating")
 @XmlAccessorType(XmlAccessType.NONE)
 @Entity
 public class Rating implements Serializable{
-	@Id @GeneratedValue
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -163806720326544373L;
+
+	@Id
 	private Integer ratingId;
 	
 	private String titleRating;
 	
-	@Temporal(TemporalType.DATE)
-	private Date dataRating;
+	@Column
+	private LocalDateTime dataRating;
 	
 	private String messageRating;
 	
 	private Integer scoreRating;
 	
-	@ManyToOne
+	@ManyToMany(cascade = { CascadeType.ALL})
+	@JoinTable(
+			name = "Rating_Persoane",
+			joinColumns = {@JoinColumn(name="ratingId")},
+					inverseJoinColumns = {@JoinColumn(name = "persoanaId")}
+			)
+	private List<Persoane> persoane = new ArrayList<>();
+	
+	@ManyToOne(cascade = ALL, fetch = LAZY)
 	private Event event;
 	
 	@XmlElement
@@ -49,15 +69,15 @@ public class Rating implements Serializable{
 	public void setTitleRating(String titleRating) {
 		this.titleRating = titleRating;
 	}
-
-	public Date getDataRating() {
+	@XmlElement
+	public LocalDateTime getDataRating() {
 		return dataRating;
 	}
 
-	public void setDataRating(Date dataRating) {
+	public void setDataRating(LocalDateTime dataRating) {
 		this.dataRating = dataRating;
 	}
-	
+	@XmlElement
 	public String getMessageRating() {
 		return messageRating;
 	}
@@ -73,7 +93,7 @@ public class Rating implements Serializable{
 	public void setScoreRating(Integer scoreRating) {
 		this.scoreRating = scoreRating;
 	}
-	@XmlElement
+//	@XmlElement
 	public Event getEvent() {
 		return event;
 	}
@@ -82,50 +102,65 @@ public class Rating implements Serializable{
 		this.event = event;
 	}
 
-	@Override
-	public String toString() {
-		return "Rating [ratingId=" + ratingId + ", titleRating=" + titleRating + ", dataRating=" + dataRating
-				+ ", messageRating=" + messageRating + ", scoreRating=" + scoreRating + ", event=" + event + "]";
+	public List<Persoane> getPersoane() {
+		return persoane;
 	}
 
-	public Rating(Integer ratingId, String titleRating, Date dataRating, String messageRating, Integer scoreRating,
-			Event event) {
-		super();
-		this.ratingId = ratingId;
-		this.titleRating = titleRating;
-		this.dataRating = dataRating;
-		this.messageRating = messageRating;
-		this.scoreRating = scoreRating;
-		this.event = event;
+	public void setPersoane(List<Persoane> persoane) {
+		this.persoane = persoane;
 	}
 
 	public Rating() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public Rating(Integer ratingId, String titleRating, String messageRating, Integer scoreRating) {
-		super();
-		this.ratingId = ratingId;
-		this.titleRating = titleRating;
-		this.messageRating = messageRating;
-		this.scoreRating = scoreRating;
-	}
-
-	public Rating(Integer ratingId, String titleRating, Date dataRating, Event event) {
+	
+	public Rating(Integer ratingId, String titleRating, LocalDateTime dataRating, String messageRating, Integer scoreRating, Event event
+			) {
 		super();
 		this.ratingId = ratingId;
 		this.titleRating = titleRating;
 		this.dataRating = dataRating;
+		this.messageRating = messageRating;
+		this.scoreRating = scoreRating;
 		this.event = event;
 	}
 	
-	public static String BASE_URL = Event.BASE_URL;
+	public Rating(Integer ratingId, String titleRating, LocalDateTime dataRating, String messageRating,
+			Integer scoreRating, List<Persoane> persoane, Event event) {
+		super();
+		this.ratingId = ratingId;
+		this.titleRating = titleRating;
+		this.dataRating = dataRating;
+		this.messageRating = messageRating;
+		this.scoreRating = scoreRating;
+		this.persoane = persoane;
+		this.event = event;
+	}
+
+//	public static String BASE_URL = Event.BASE_URL;
+//	
+//	@XmlElement(name="link")
+//	public AtomLink getLink() throws Exception {
+//		String restUrl = BASE_URL
+//				+ this.getEvent().getEventID()
+//				+ "/ratings/"
+//				+ this.getRatingId();
+//		return new AtomLink(restUrl, "get-rating");
+//	}
 	
+	
+
+	@Override
+	public String toString() {
+		return "Rating [ratingId=" + ratingId + ", titleRating=" + titleRating + ", dataRating=" + dataRating
+				+ ", messageRating=" + messageRating + ", scoreRating=" + scoreRating + "]";
+	}
+	
+	public static String BASE_URL = "http://localhost:8080/SCRUM/DATA/ratings/";
 	@XmlElement(name="link")
 	public AtomLink getLink() throws Exception {
-		String restUrl = BASE_URL
-				+ this.getEvent().getEventName() + "/ratings/" + this.getRatingId();
+		String restUrl = BASE_URL + this.getRatingId();
 		return new AtomLink(restUrl, "get-rating");
 	}
 }

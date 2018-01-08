@@ -14,7 +14,7 @@ public interface EventService {
 	String removeEvent(Event eventToDelete);
 	
 	//Read
-	Event getEventByEventID(Integer eventID);
+	Event getEventByEventID(Integer evId);
 	Collection<Event> getEvents();
 	
 	//Costume the query

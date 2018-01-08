@@ -2,29 +2,35 @@ package org.app.service.entities;
 import java.io.Serializable;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.*;
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.FetchType.LAZY;
 
-@XmlRootElement(name="project")
+
+@XmlRootElement(name="event")
 @XmlAccessorType(XmlAccessType.NONE)
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Event implements Serializable {
 	
-	@Id 
-	@GeneratedValue
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6485269313210188149L;
+
+	@Id
+//	@GeneratedValue
 	private Integer eventID;
 	
 	private String eventName;
 
-	private String Location;
+	private String eventLocation;
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
@@ -33,10 +39,11 @@ public class Event implements Serializable {
 	
 	private Integer nrPlaces;
 	
-	@OneToMany(mappedBy = "event", cascade = ALL, fetch = EAGER, orphanRemoval = false)
-	private List<Invitation> invitatie = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "event", cascade = ALL, fetch = LAZY, orphanRemoval = false)
+	@OneToMany(mappedBy = "event", cascade = ALL, orphanRemoval = false, fetch = EAGER)
+	private List<Invitatie> invitatie = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "event", cascade = ALL, orphanRemoval = false)
 	private List<Rating> rating = new ArrayList<>();
 
 	@XmlElement
@@ -56,15 +63,15 @@ public class Event implements Serializable {
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-
-	public String getLocation() {
-		return Location;
+	@XmlElement
+	public String getEventLocation() {
+		return eventLocation;
 	}
 
-	public void setLocation(String location) {
-		Location = location;
+	public void setEventLocation(String eventLocation) {
+		this.eventLocation = eventLocation;
 	}
-
+	@XmlElement
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -72,7 +79,7 @@ public class Event implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-
+	@XmlElement
 	public String getDescription() {
 		return description;
 	}
@@ -80,7 +87,7 @@ public class Event implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	@XmlElement
 	public Integer getNrPlaces() {
 		return nrPlaces;
 	}
@@ -88,16 +95,15 @@ public class Event implements Serializable {
 	public void setNrPlaces(Integer nrPlaces) {
 		this.nrPlaces = nrPlaces;
 	}
-	
-	@XmlElementWrapper(name="invitations") @XmlElement(name="invitation")
-	public List<Invitation> getInvitatie() {
+	@XmlElementWrapper(name = "invitatii") @XmlElement(name = "invitatie")
+	public List<Invitatie> getInvitatie() {
 		return invitatie;
 	}
 
-	public void setInvitatie(List<Invitation> invitatie) {
+	public void setInvitatie(List<Invitatie> invitatie) {
 		this.invitatie = invitatie;
 	}
-	@XmlElementWrapper(name="ratings") @XmlElement(name="rating")
+	@XmlElements({@XmlElement(name = "rating_s", type = Rating.class)})
 	public List<Rating> getRating() {
 		return rating;
 	}
@@ -106,53 +112,34 @@ public class Event implements Serializable {
 		this.rating = rating;
 	}
 
-	public Event(Integer eventID, String eventName, String location, Date startDate, String description,
-			Integer nrPlaces, List<Invitation> invitatie) {
-		super();
-		this.eventID = eventID;
-		this.eventName = eventName;
-		Location = location;
-//		this.startDate = startDate;
-		this.description = description;
-		this.nrPlaces = nrPlaces;
-		this.invitatie = invitatie;
-	}
 
 	public Event() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public Event(Integer eventID, String eventName, String Location, String description, Integer nrPlaces) {
+	
+	public Event(Integer eventID, String eventName, String eventLocation, Date startDate, String description,
+			Integer nrPlaces) {
 		super();
 		this.eventID = eventID;
 		this.eventName = eventName;
-		this.Location = Location;
+		this.eventLocation = eventLocation;
+		this.startDate = startDate;
 		this.description = description;
 		this.nrPlaces = nrPlaces;
-	
-	}
-	
-	
-
-	public Event(Integer eventID, String eventName, Date startDate) {
-		super();
-		this.eventID = eventID;
-		this.eventName = eventName;
-		this.startDate = startDate;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Location == null) ? 0 : Location.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((eventID == null) ? 0 : eventID.hashCode());
+		result = prime * result + ((eventLocation == null) ? 0 : eventLocation.hashCode());
 		result = prime * result + ((eventName == null) ? 0 : eventName.hashCode());
 		result = prime * result + ((invitatie == null) ? 0 : invitatie.hashCode());
 		result = prime * result + ((nrPlaces == null) ? 0 : nrPlaces.hashCode());
+		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		return result;
 	}
@@ -166,11 +153,6 @@ public class Event implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Event other = (Event) obj;
-		if (Location == null) {
-			if (other.Location != null)
-				return false;
-		} else if (!Location.equals(other.Location))
-			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -180,6 +162,11 @@ public class Event implements Serializable {
 			if (other.eventID != null)
 				return false;
 		} else if (!eventID.equals(other.eventID))
+			return false;
+		if (eventLocation == null) {
+			if (other.eventLocation != null)
+				return false;
+		} else if (!eventLocation.equals(other.eventLocation))
 			return false;
 		if (eventName == null) {
 			if (other.eventName != null)
@@ -196,6 +183,11 @@ public class Event implements Serializable {
 				return false;
 		} else if (!nrPlaces.equals(other.nrPlaces))
 			return false;
+		if (rating == null) {
+			if (other.rating != null)
+				return false;
+		} else if (!rating.equals(other.rating))
+			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
@@ -206,15 +198,38 @@ public class Event implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Event [eventID=" + eventID + ", eventName=" + eventName + ", Location=" + Location + ", startDate="
-				 + ", description=" + description + ", nrPlaces=" + nrPlaces + ", invitatie=" + invitatie
-				+ "]";
+		return "Event [eventID=" + eventID + ", eventName=" + eventName + ", eventLocation=" + eventLocation
+				+ ", startDate=" + startDate + ", description=" + description + ", nrPlaces=" + nrPlaces
+				+  "]";
+	}
+
+	public static String BASE_URL = "http://localhost:8080/SCRUM/DATA/events/";
+	@XmlElement(name="link")
+	public AtomLink getLink() throws Exception {
+		String restUrl = BASE_URL + this.getEventID();
+		return new AtomLink(restUrl, "get-event");
 	}
 	
-	public static String BASE_URL = "http://localhost:8080/SCRUM/DATA/events/";
-	@XmlElement(name = "link")
-    public AtomLink getLink() throws Exception {
-		String restUrl = BASE_URL + this.getEventID();
-        return new AtomLink(restUrl, "get-Event");
-    }	
-}
+	public Event toDTO () {
+		Event eventToDTO = new Event (eventID, eventName, eventLocation, startDate, description, nrPlaces);
+		return eventToDTO;
+	}
+	public static Event toDTOAggregate(Event event) {
+		if(event == null) {
+			return null;
+		}
+		Event eventToDTO = event.toDTO();
+		List<Invitatie> invitationsToDTO = Invitatie.toDTOList(event.getInvitatie());
+		eventToDTO.setInvitatie(invitationsToDTO);
+		
+		return eventToDTO;
+	}
+	
+	public static Collection<Event> toDTOCOllection (Collection<Event> event){
+		List<Event> eventToDTO = new ArrayList<>();
+		for(Event e: event) {
+			eventToDTO.add(e.toDTO());
+		}
+		return eventToDTO;
+	}
+ }

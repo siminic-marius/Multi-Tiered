@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 
@@ -53,9 +54,13 @@ public class TestEventDataServiceEJBArq {
 	public void test3_AddEvent() {
 		logger.info("DEBUG: Junit TESTING: testAddEvent ...");
 		
+		Date startDate = new Date();
+		Long interval =  12l * 30 /*zile*/ * 24 /*ore*/ * 60 /*min*/ * 60 /*sec*/ * 1000 /*milisec*/;
+		
 		Integer eventToAdd = 5;
-		for(int i=0; i < eventToAdd; i++) {
-			service.addEvent(new Event (null, "Slimi" + (i + 100), "dsasdadasda" + (i + 100), "sadsdsadas" + (i + 100), 4 + i));
+		for(int i = 0; i < eventToAdd; i++) {
+			service.addEvent(new Event (i, "Event: " + (i + 100), "Event: Iasi: " + (i + 100), 
+					new Date(startDate.getTime() + i * interval), "Event -- " + (i + 100), 150 + i));
 		}
 		
 		Collection <Event> events = service.getEvents();

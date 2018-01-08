@@ -2,7 +2,6 @@ package org.app.service.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -13,6 +12,10 @@ import javax.persistence.InheritanceType;
 public class Presentations extends Event implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5712138590642599420L;
 	private Integer presentationId;
 	private String speakerPresentation;
 	private Integer nrSeats;
@@ -39,30 +42,15 @@ public class Presentations extends Event implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Presentations(Integer eventID, String eventName, String location, Date startDate, String description,
-			Integer nrPlaces, List<Invitation> invitatie) {
-		super(eventID, eventName, location, startDate, description, nrPlaces, invitatie);
-		// TODO Auto-generated constructor stub
-	}
-	public Presentations(Integer eventID, String eventName, String Location, String description, Integer nrPlaces) {
-		super(eventID, eventName, Location, description, nrPlaces);
-		// TODO Auto-generated constructor stub
-	}
-	public Presentations(Integer eventID, String eventName, String location, Date startDate, String description,
-			Integer nrPlaces, List<Invitation> invitatie, Integer presentationId, String speakerPresentation,
-			Integer nrSeats) {
-		super(eventID, eventName, location, startDate, description, nrPlaces, invitatie);
+	
+	public Presentations(Integer eventID, String eventName, String eventLocation, Date startDate, String description,
+			Integer nrPlaces, Integer presentationId, String speakerPresentation, Integer nrSeats) {
+		super(eventID, eventName, eventLocation, startDate, description, nrPlaces);
 		this.presentationId = presentationId;
 		this.speakerPresentation = speakerPresentation;
 		this.nrSeats = nrSeats;
 	}
 	
-	public Presentations(Integer presentationId, String speakerPresentation, Integer nrSeats) {
-		super();
-		this.presentationId = presentationId;
-		this.speakerPresentation = speakerPresentation;
-		this.nrSeats = nrSeats;
-	}
 	@Override
 	public String toString() {
 		return "Presentations [presentationId=" + presentationId + ", speakerPresentation=" + speakerPresentation

@@ -1,12 +1,14 @@
 package org.app.service.ejb.test;
 import org.app.service.ejb.WorkshopsService;
 import org.app.service.ejb.WorkshopsServiceEJB;
+import org.app.service.entities.Presentations;
 import org.app.service.entities.Workshops;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 
@@ -51,20 +53,24 @@ public class TestWorkshopsDataServiceEJBArq {
 	}
 	
 	@Test
-	public void test2_getWorkshops() {
+	public void test4_getWorkshops() {
 		logger.info("DEBUG: Junit TESTING: testGetWorkshops");
 		
 		Collection<Workshops> workshops = service.getWorkshops();
-		assertTrue("Fail to read Workshops!", workshops.size() == 0);
+		assertTrue("Fail to read Workshops!", workshops.size() > 0);
 	}
 	
 	@Test
 	public void test3_addWorkshops() {
 		logger.info("DEBUG Junit TESTING: testAddWorkshops...");
 		
+		Date startDate = new Date();
+		Long in = 30l * 24 * 60 * 60 * 1000;
+		
 		Integer workshopsToAdd = 5;
 		for(int i = 0; i < workshopsToAdd; i++) {
-			service.AddWorkshops(new Workshops(150 + i, "asasda" + (90+i), "asadasdasdasd" + (80 + i)));
+			service.AddWorkshops(new Workshops(420 + i, "Event For Presentations " + (420 + i), "Bacau " + (20 + i), new Date(startDate.getTime() + i * in), "Event: Presentation: " + (100 + i), 250 + i, 
+					150 + i, "Workshop: " + (90+i), "Material " + (10 + i)));
 		}
 		
 		Collection<Workshops> workshops = service.getWorkshops();
@@ -72,7 +78,7 @@ public class TestWorkshopsDataServiceEJBArq {
 	}
 	
 	@Test
-	public void test4_deleteWorkshops() {
+	public void test2_deleteWorkshops() {
 		logger.info("DEBUG: Junit TESTING: testDeleteWorkshops...");
 		
 		Collection<Workshops> workshops = service.getWorkshops();

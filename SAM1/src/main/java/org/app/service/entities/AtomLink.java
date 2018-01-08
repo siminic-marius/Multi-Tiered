@@ -9,6 +9,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(value = XmlAccessType.NONE)
 public class AtomLink implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6238811902365279651L;
 	private URI href;
 	private String rel;
 	private String type;

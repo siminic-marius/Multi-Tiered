@@ -7,7 +7,11 @@ import org.app.service.entities.Presentations;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 
@@ -52,7 +56,7 @@ private static Logger logger = Logger.getLogger(TestPresentationsDataServiceEJBA
 	}
 	
 	@Test
-	public void test2_getPresentations() {
+	public void test4_getPresentations() {
 		logger.info("DEBUG: Junit TESTING: testGetPresentations");
 		
 		Collection<Presentations> presentations = service.getPresentations();
@@ -63,9 +67,13 @@ private static Logger logger = Logger.getLogger(TestPresentationsDataServiceEJBA
 	public void test3_addPresentation() {
 		logger.info("DEBUG Junit TESTING: testAddpresentations...");
 		
+		Date startDate = new Date();
+		Long in = 30l * 24 * 60 * 60 * 1000;
+
 		Integer presentationsToAdd = 5;
 		for(int i = 0; i < presentationsToAdd; i++) {
-			service.AddPresentations(new Presentations(100 + i , "asasda" + (90+i), 10 + i));
+			service.AddPresentations(new Presentations(420 + i, "Event For Presentations " + (420 + i), "Bacau " + (20 + i), new Date(startDate.getTime() + i * in), "Event: Presentation: " + (100 + i), 250 + i,
+					100 + i , "Presentation " + (90+i), 10 + i));
 		}
 		
 		Collection<Presentations> presentations = service.getPresentations();
@@ -73,7 +81,7 @@ private static Logger logger = Logger.getLogger(TestPresentationsDataServiceEJBA
 	}
 	
 	@Test
-	public void test4_deletePresentation() {
+	public void test2_deletePresentation() {
 		logger.info("DEBUG: Junit TESTING: testDeletepresentations...");
 		
 		Collection<Presentations> presentations = service.getPresentations();

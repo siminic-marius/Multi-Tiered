@@ -47,6 +47,14 @@ public class TestEventRatingDataServiceEJBArq {
 	private static EventRatingDataService service;
 	
 	@Test
+	public void test1_GetMessage() {
+		logger.info("DEBUG: Junit TESTING: testGetMessage ...");
+		String response = service.getMessage();
+		assertNotNull("Data Service failed!", response);
+		logger.info("DEBUG: EJB Response ..." + response);
+	}
+	
+	@Test
 	public void test4_getEvent() {
 		logger.info("DEBUG: Junit TESTING: testGetEvent: 1111 ...");
 		Event event = service.getById(1111);
@@ -58,7 +66,7 @@ public class TestEventRatingDataServiceEJBArq {
 		Event event = service.createNewEvent(1111);
 		assertNotNull("Fail to create new project in repository!'", event);
 		//update project
-		event.setEventName(event.getEventName() + "- I changed something");
+		event.setEventName(event.getEventName() + " - X-Mass Event");
 		List<Rating> rating = event.getRating();
 		
 		for(Rating r: rating) {
