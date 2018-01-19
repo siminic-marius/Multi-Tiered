@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/templates/default_template.xhtml">
+	<ui:define name="head">
+		<!-- Test contents Comment Head-->
+	</ui:define>
+
+	<ui:define name="bodyContent">
+		<h:form id="editForm">
+			<p:growl id="messages" showDetail="false" />
+	
+			<p:panelGrid columns="1">		
+				<p:panelGrid columns="2">
+					<f:facet name="header">Person Information</f:facet>
+					<h:outputLabel for="persoanaId" value="Persoana#" />
+					<p:inputText id="persoanaId" 
+						value="#{persoaneViewController.selectedPersoane.persoanaId}" label="persoanaId" />
+						
+					<h:outputLabel for="name" value="Name" />
+					<p:inputText id="name" 
+						value="#{persoaneViewController.selectedPersoane.name}" label="name"/>
+						
+					<h:outputLabel for="localitate" value="Localitate" />
+					<p:inputText id="localitate" 
+						value="#{persoaneViewController.selectedPersoane.localitate}" label="localitate"/>
+						
+					<h:outputLabel for="sex" value="Sex" />
+					<p:inputText id="sex" 
+						value="#{persoaneViewController.selectedPersoane.sex}" label="sex"/>
+						
+					<h:outputLabel for="email" value="Email" />
+					<p:inputText id="email" 
+						value="#{persoaneViewController.selectedPersoane.email}" label="email"/>
+						
+					<f:facet name="footer">
+						<p:commandButton value="Save"
+							update="messages" actionListener="#{persoaneViewController.selectedPersoane}"
+							icon="ui-icon-check" style="margin:0"/>
+					</f:facet>
+				</p:panelGrid>
+				
+				<p:dataTable var="invitatie" value="#{persoaneViewController.selectedPersoane.invitatii}" 
+						sortBy="#{invitatie.invitationId}"
+						style="margin-bottom:40px">
+			        <f:facet name="header">
+			            Invitatie List: Sortable
+			        </f:facet>
+					<p:column headerText="Invitatie ID" sortBy="#{invitatie.invitationId}">
+						<h:inputText value="#{invitatie.invitationId}" />
+					</p:column>
+
+					<p:column headerText="Message" sortBy="#{invitatie.messageInvitatie}">
+			            <h:inputText value="#{invitatie.messageInvitatie}" />
+			        </p:column>	 
+			        
+			        <p:column headerText="Date" sortBy="#{invitatie.dataInvitatie}">
+			            <p:calendar value="#{invitatie.dataInvitatie}" pattern="dd/MM/yyyy"/>
+			        </p:column>        
+		    		</p:dataTable>  
+				
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

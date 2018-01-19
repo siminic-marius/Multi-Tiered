@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/templates/default_template.xhtml">
+	<ui:define name="head">
+		<!-- Test contents Comment Head-->
+	</ui:define>
+
+	<ui:define name="bodyContent">
+		<h:form id="listForm">
+			<p:dataTable style="margin-bottom:40px" var="persoane"
+				value="#{persoaneViewController.persoane}">
+
+				<f:facet name="header">
+		            Persoane List Form Simple
+		        </f:facet>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton icon="ui-icon-search" title="View" ajax="false"
+						action="/views/PersoaneInvitatiiEditView.xhtml">
+						<f:setPropertyActionListener value="#{persoane}"
+							target="#{persoaneViewController.selectedPersoane}" />
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Persoane#">
+					<h:outputText value="#{persoane.persoanaId}" />
+				</p:column>
+
+				<p:column headerText="Name">
+					<h:outputText value="#{persoane.name}" />
+				</p:column>
+				
+				<p:column headerText="Localitate">
+					<h:outputText value="#{persoane.localitate}" />
+				</p:column>
+				
+				<p:column headerText="Sex">
+					<h:outputText value="#{persoane.sex}" />
+				</p:column>
+				
+				<p:column headerText="Email">
+					<h:outputText value="#{persoane.email}" />
+				</p:column>
+				
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

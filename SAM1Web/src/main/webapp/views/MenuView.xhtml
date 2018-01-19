@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+	<title>Menu View</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:panelMenu style="width:200px">
+			<p:submenu label="Persoane">
+				<p:submenu label="Persoane Info">
+					<p:menuitem value="Persoane List" action="/views/PersoaneListFormSimple.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneListFormSimple.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" />
+					<p:menuitem value="Persoane Filtrare" action="/views/PersoaneFiltrare.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneFiltrare.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-pencil" />
+					<p:menuitem value="Persoane Update" action="/views/PersoaneEditView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneEditView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-pencil" />
+				</p:submenu>
+				
+				<p:submenu label="Persoane Invitatii">
+					<p:menuitem value="Persoane-Invitatii Simple" action="/PersoaneInvitatiiListView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneInvitatiiListView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" />
+					
+					<p:menuitem value="Persoane-Invitatii Edit" action="/views/PersoaneInvitatiiEditView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneInvitatiiEditView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" />
+					
+					<p:menuitem value="Persoane-Invitatii Filterable" action="/views/ProjectsReleaseListView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/ProjectsReleaseListView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" 
+						actionListener="#{menuViewController.showFilterablePersons()}" update="messages"/>
+						
+				</p:submenu>
+					
+			</p:submenu>
+			<p:submenu label="Sprints">
+				<p:menuitem value="ShowSprints" ajax="false" icon="ui-icon-info"
+					action="/welcome.xhtml"
+					actionListener="#{menuViewController.showSprints}" update="messages" />
+			</p:submenu>
+			<p:separator />
+			<p:submenu label="Primefaces Links">
+				<p:submenu label="Links" icon="ui-icon-extlink">
+					<p:submenu label="Prime Products">
+						<p:menuitem value="Prime UI" icon="ui-icon-home"
+							url="http://primefaces.org/primeui" />
+						<p:menuitem value="Prime Mobile" icon="ui-icon-signal"
+							url="http://primefaces.org/showcase/mobile/index.xhtml" />
+					</p:submenu>
+					<p:submenu label="Prime Resources">
+						<p:menuitem value="Docs" icon="ui-icon-document"
+							url="http://primefaces.org/documentation.html" />
+
+						<p:menuitem value="Download" icon="ui-icon-arrowthick-1-s"
+							url="http://primefaces.org/downloads.html" />
+					</p:submenu>
+				</p:submenu>
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+
+</h:body>
+</html>

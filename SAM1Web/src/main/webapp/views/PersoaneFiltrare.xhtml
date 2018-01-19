@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+<ui:composition template="/templates/default_template.xhtml">
+	<ui:define name="head">
+		<!-- Test contents Comment Head-->
+	</ui:define>
+
+	<ui:define name="bodyContent">
+		<h:form>
+			<p:dataTable 
+					var="persoane" widgetVar="persons" 
+					value="#{persoaneViewController.persoane}" filteredValue="#{persoaneViewController.filteredPersoane}"
+					sortBy="#{persoane.persoanaId}" 
+					style="margin-bottom:40px">
+		        <f:facet name="header">
+		            Persoane List View: Filterable
+		        </f:facet>
+		        
+		        <p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}"
+		        		 filterBy="#{persoane.persoanaId}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{persoane.persoanaId}" />
+		        </p:column>
+		        
+				<p:column headerText="Name" sortBy="#{persoane.name}"
+						filterBy="#{persoane.name}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{persoane.name}" />
+		        </p:column>	
+		        
+		        <p:column headerText="Localitate" sortBy="#{persoane.localitate}"
+						filterBy="#{persoane.localitate}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{persoane.localitate}" />
+		        </p:column>	
+		        
+		        <p:column headerText="Sex" sortBy="#{persoane.sex}"
+						filterBy="#{persoane.sex}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{persoane.sex}" />
+		        </p:column>	 
+		        
+		        <p:column headerText="Email" sortBy="#{persoane.email}"
+						filterBy="#{persoane.email}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{persoane.email}" />
+		        </p:column>	
+		              
+		    </p:dataTable>      
+	    </h:form>
+	</ui:define>
+
+	<ui:define name="rightPan">
+		<h:outputText value="PersoaneListView Right Panel" />
+	</ui:define>
+
+</ui:composition>
+</html>

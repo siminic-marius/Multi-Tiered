@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+<ui:composition template="/templates/default_template.xhtml">
+	<ui:define name="head">
+		<!-- Test contents Comment Head-->
+	</ui:define>
+
+	<ui:define name="bodyContent">
+	<p:layout >
+			<h:form id="form">
+				<p:growl id="messages" showDetail="false" />
+				
+				<p:layoutUnit position="west" resizable="true" size="400">
+					<p:dataTable id="dtPersoane" var="persoane" 
+						value="#{persoaneViewController.persoane}"
+						sortBy="#{persoane.persoanaId}" 
+						selectionMode="single" scrollable="true"
+						selection="#{persoaneViewController.selectedPersoane}" 
+						rowKey="#{persoane.persoanaId}" >
+						<p:ajax event="rowSelect" listener="#{persoaneViewController.onRowSelect()}" 
+							update=":form:persoanaId :form:name :form:localitate :form:sex :form:email"/>
+						<f:facet name="header"> Persoane List</f:facet>
+						<p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}">
+							<h:outputText value="#{persoane.persoanaId}" />
+						</p:column>
+	
+						<p:column headerText="Name" sortBy="#{persoane.name}">
+							<h:outputText value="#{persoane.name}" />
+						</p:column>
+						
+						<p:column headerText="Name" sortBy="#{persoane.localitate}">
+							<h:outputText value="#{persoane.name}" />
+						</p:column>
+						
+						<p:column headerText="Sex" sortBy="#{persoane.sex}">
+							<h:outputText value="#{persoane.email}" />
+						</p:column>
+						
+						<p:column headerText="Email" sortBy="#{persoane.email}">
+							<h:outputText value="#{persoane.email}" />
+						</p:column>
+						
+					</p:dataTable>				
+				</p:layoutUnit>
+	
+				<p:layoutUnit id="layout_detail" position="center" resizable="true" >
+					<p:panelGrid columns="2">
+						<f:facet name="header">Persoane Information</f:facet>
+						
+						<h:outputLabel for="persoaneId" value="Persoane#" />
+						<p:inputText id="persoaneId" 
+							value="#{persoaneViewController.selectedPersoane.persoanaId}" label="persoaneId" />
+							
+						<h:outputLabel for="name" value="Person Name" />
+						<p:inputText id="name" 
+							value="#{persoaneViewController.selectedPersoane.name}" label="name"/>
+							
+						<h:outputLabel for="localitate" value="Localitate" />
+						<p:inputText id="localitate" 
+							value="#{persoaneViewController.selectedPersoane.localitate}" label="startDate"/>
+							
+						<h:outputLabel for="sex" value="Sex" />
+						<p:inputText id="sex"
+							value="#{persoaneViewController.selectedPersoane.sex}" label="startDate"/>
+							
+						<h:outputLabel for="email" value="email" />
+						<p:inputText id="email" 
+							value="#{persoaneViewController.selectedPersoane.email}" label="email"/>
+								
+							
+						<f:facet name="footer">
+							<p:commandButton value="Save"
+								update="messages dtProjects" actionListener="#{persoaneViewController.saveSelectedPersoane()}"
+								icon="ui-icon-check" style="margin:0"/>
+						</f:facet>
+					</p:panelGrid>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="north">
+					<h:outputText value="List of persons: edit project details" />
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="south">
+					<h:outputText value="SOUTH" />
+				</p:layoutUnit>
+				
+			</h:form>
+		</p:layout>
+	</ui:define>
+
+</ui:composition>
+</html>

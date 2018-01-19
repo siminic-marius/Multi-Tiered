@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<ui:insert name="headPan" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:ajax event="resize" />
+		<p:growl id="messages" showDetail="false"/>
+		
+		<p:layoutUnit position="north">
+			<p:panel header="PrimeFaces Showcase">
+				<h:outputText value="SPRINT App Header Panel" />
+			</p:panel>
+		</p:layoutUnit>
+		<p:layoutUnit position="west" collapsible="true" gutter="1" >
+			<ui:include src="../views/MenuView.xhtml"/>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<ui:insert name="bodyContent" />
+		</p:layoutUnit>
+		<p:layoutUnit position="east" collapsible="true" gutter="1">
+			<ui:insert name="rightPan" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+
+</html>
