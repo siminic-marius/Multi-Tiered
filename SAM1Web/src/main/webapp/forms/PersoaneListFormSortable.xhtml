@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Persoane List View</title>
+</h:head>
+
+<h:body>
+    <h:form>
+		<p:dataTable var="persoane" value="#{persoaneViewController.persoane}" sortBy="#{persoane.persoanaId}"
+				style="margin-bottom:40px">
+	        <f:facet name="header">
+	            Persoane List: Sortable
+	        </f:facet>
+	        <p:column headerText="Persoana#" sortBy="#{persoane.persoanaId}">
+	            <h:outputText value="#{project.projectNo}" />
+	        </p:column>
+	        
+			<p:column headerText="Name" sortBy="#{persoane.name}">
+	            <h:outputText value="#{persoane.name}" />
+	        </p:column>	 
+	        
+	        <p:column headerText="Localitate" sortBy="#{persoane.localitate}">
+	            <h:outputText value="#{persoane.localitate}" />
+	        </p:column>
+	        
+	        <p:column headerText="Sex" sortBy="#{persoane.sex}">
+	            <h:outputText value="#{persoane.sex}" />
+	        </p:column> 
+	        
+	        <p:column headerText="Email" sortBy="#{persoane.email}">
+	            <h:outputText value="#{persoane.email}" />
+	        </p:column>  
+	        
+	               
+	    </p:dataTable>      
+    </h:form>
+    <div></div>
+</h:body>
+</html>

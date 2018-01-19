@@ -17,7 +17,7 @@
 				<p:growl id="messages" showDetail="false" />
 				
 				<p:layoutUnit position="west" resizable="true" size="400">
-					<p:dataTable id="persoana" var="persoane" 
+					<p:dataTable id="Event" var="event" 
 						value="#{persoaneViewController.persoane}"
 						sortBy="#{persoane.persoanaId}" 
 						selectionMode="single" scrollable="true"
@@ -25,7 +25,7 @@
 						rowKey="#{persoane.persoanaId}" >
 						
 						<p:ajax event="rowSelect" listener="#{persoaneViewController.onRowSelect}" 
-							update=":form:persoana :form:name :form:localitate :form:sex :form:email"/>
+							update=":form:persoanaId :form:name :form:localitate :form:sex :form:email"/>
 							
 						<f:facet name="header"> Persoane List</f:facet>
 						<p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}">
@@ -85,7 +85,7 @@
 				</p:layoutUnit>
 				
 				<p:layoutUnit position="north">
-					<h:outputText value="List of persons: edit persoane details" />
+					<h:outputText value="List of persons: edit project details" />
 				</p:layoutUnit>
 				
 				<p:layoutUnit position="south">

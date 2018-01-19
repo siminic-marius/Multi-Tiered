@@ -9,45 +9,43 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <h:head>
-    <title>Persoane List Simple Form</title>
+    <title>Persoane List View Count Rows</title>
 </h:head>
 
 <h:body>
-    <h:form id="listForm">
-		<p:dataTable style="margin-bottom:40px"
-				var="persoane" 
-				value="#{persoaneViewController.persoane}" >
-	        
+    <h:form>
+		<p:dataTable var="persoane" value="#{persoaneViewController.persoane}" sortBy="#{persoane.persoanaId}"
+				style="margin-bottom:40px">
 	        <f:facet name="header">
-	            Persoane List Form Simple
+	            Persoane List: COUNT Rows
 	        </f:facet>
 	        
-			<p:column style="width:32px;text-align: center">
-            		<p:commandButton icon="ui-icon-search" title="View" action="/views/PersoaneInvitatiiEditView.xhtml">
-                		<f:setPropertyActionListener value="#{persoane}" 
-                			target="#{persoaneViewController.selectedPersoane}" />
-            		</p:commandButton>
-        		</p:column>	        
-	        <p:column headerText="Persoane#">
+	        <p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}" sortable="true">
 	            <h:outputText value="#{persoane.persoanaId}" />
 	        </p:column>
 	        
-			<p:column headerText="Name" >
+			<p:column headerText="Name" sortBy="#{persoane.name}">
 	            <h:outputText value="#{persoane.name}" />
 	        </p:column>	 
 	        
-	        <p:column headerText="Localitate" >
+	        <p:column headerText="Localitate" sortBy="#{persoane.localitate}">
 	            <h:outputText value="#{persoane.localitate}" />
-	        </p:column>	 
+	        </p:column>
 	        
-	        <p:column headerText="Name" >
+	        <p:column headerText="Sex" sortBy="#{persoane.sex}">
 	            <h:outputText value="#{persoane.sex}" />
-	        </p:column>	 
+	        </p:column>
 	        
-	        <p:column headerText="Name" >
+	        <p:column headerText="Email" sortBy="#{persoane.email}">
 	            <h:outputText value="#{persoane.email}" />
-	        </p:column>	         
+	        </p:column>
+	        
+	        
+			 <f:facet name="footer">
+		        Persoane Count: #{fn:length(persoaneViewController.persoane)}
+		    </f:facet>       
 	    </p:dataTable>      
     </h:form>
+    <div></div>
 </h:body>
 </html>

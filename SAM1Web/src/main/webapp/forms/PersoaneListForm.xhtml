@@ -9,44 +9,53 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <h:head>
-    <title>Persoane List Simple Form</title>
+    <title>Projects List Form</title>
 </h:head>
 
 <h:body>
     <h:form id="listForm">
 		<p:dataTable style="margin-bottom:40px"
-				var="persoane" 
-				value="#{persoaneViewController.persoane}" >
+				var="persoane" widgetVar="persons" 
+				value="#{persoaneViewController.persoane}" 
+					filteredValue="#{persoaneViewController.filteredPersoane}"
+					sortBy="#{persoane.persoanaId}" >
 	        
 	        <f:facet name="header">
-	            Persoane List Form Simple
+	            Persoane List Form with Filters::
 	        </f:facet>
 	        
 			<p:column style="width:32px;text-align: center">
-            		<p:commandButton icon="ui-icon-search" title="View" action="/views/PersoaneInvitatiiEditView.xhtml">
+            		<p:commandButton icon="ui-icon-search" title="View" action="/forms/PersoaneEditForm.xhtml">
                 		<f:setPropertyActionListener value="#{persoane}" 
                 			target="#{persoaneViewController.selectedPersoane}" />
             		</p:commandButton>
         		</p:column>	        
-	        <p:column headerText="Persoane#">
+	        <p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}"
+	        		 filterBy="#{persoane.persoanaId}" filterMatchMode="contains" footerText="contains">
 	            <h:outputText value="#{persoane.persoanaId}" />
 	        </p:column>
 	        
-			<p:column headerText="Name" >
+			<p:column headerText="Name" sortBy="#{persoane.name}"
+					filterBy="#{persoane.name}" filterMatchMode="contains" footerText="contains">
 	            <h:outputText value="#{persoane.name}" />
-	        </p:column>	 
-	        
-	        <p:column headerText="Localitate" >
+	        </p:column>
+	        	
+	        <p:column headerText="Localitate" sortBy="#{persoane.localitate}"
+					filterBy="#{persoane.localitate}" filterMatchMode="contains" footerText="contains">
 	            <h:outputText value="#{persoane.localitate}" />
-	        </p:column>	 
+	        </p:column> 
 	        
-	        <p:column headerText="Name" >
+	        <p:column headerText="Sex" sortBy="#{persoane.sex}"
+					filterBy="#{persoane.sex}" filterMatchMode="contains" footerText="contains">
 	            <h:outputText value="#{persoane.sex}" />
-	        </p:column>	 
+	        </p:column>
 	        
-	        <p:column headerText="Name" >
+	        <p:column headerText="Email" sortBy="#{persoane.email}"
+					filterBy="#{persoane.email}" filterMatchMode="contains" footerText="contains">
 	            <h:outputText value="#{persoane.email}" />
-	        </p:column>	         
+	        </p:column>
+	        
+	        
 	    </p:dataTable>      
     </h:form>
 </h:body>
