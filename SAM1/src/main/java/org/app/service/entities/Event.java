@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.*;
 import static javax.persistence.FetchType.EAGER;
 
@@ -17,6 +19,7 @@ import static javax.persistence.FetchType.EAGER;
 @XmlAccessorType(XmlAccessType.NONE)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Event implements Serializable {
 	
 	/**
@@ -27,9 +30,9 @@ public class Event implements Serializable {
 	@Id
 //	@GeneratedValue
 	private Integer eventID;
-	
-	private String eventName;
 
+	private String eventName;
+	
 	private String eventLocation;
 	
 	@Temporal(TemporalType.DATE)
@@ -38,10 +41,6 @@ public class Event implements Serializable {
 	private String description;
 	
 	private Integer nrPlaces;
-	
-	
-	@OneToMany(mappedBy = "event", cascade = ALL, orphanRemoval = false, fetch = EAGER)
-	private List<Invitatie> invitatie = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "event", cascade = ALL, orphanRemoval = false)
 	private List<Rating> rating = new ArrayList<>();
@@ -95,15 +94,8 @@ public class Event implements Serializable {
 	public void setNrPlaces(Integer nrPlaces) {
 		this.nrPlaces = nrPlaces;
 	}
-	@XmlElementWrapper(name = "invitatii") @XmlElement(name = "invitatie")
-	public List<Invitatie> getInvitatie() {
-		return invitatie;
-	}
 
-	public void setInvitatie(List<Invitatie> invitatie) {
-		this.invitatie = invitatie;
-	}
-	@XmlElements({@XmlElement(name = "rating_s", type = Rating.class)})
+	//@XmlElements({@XmlElement(name = "rating_s", type = Rating.class)})
 	public List<Rating> getRating() {
 		return rating;
 	}
@@ -137,7 +129,6 @@ public class Event implements Serializable {
 		result = prime * result + ((eventID == null) ? 0 : eventID.hashCode());
 		result = prime * result + ((eventLocation == null) ? 0 : eventLocation.hashCode());
 		result = prime * result + ((eventName == null) ? 0 : eventName.hashCode());
-		result = prime * result + ((invitatie == null) ? 0 : invitatie.hashCode());
 		result = prime * result + ((nrPlaces == null) ? 0 : nrPlaces.hashCode());
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
@@ -173,11 +164,6 @@ public class Event implements Serializable {
 				return false;
 		} else if (!eventName.equals(other.eventName))
 			return false;
-		if (invitatie == null) {
-			if (other.invitatie != null)
-				return false;
-		} else if (!invitatie.equals(other.invitatie))
-			return false;
 		if (nrPlaces == null) {
 			if (other.nrPlaces != null)
 				return false;
@@ -210,18 +196,10 @@ public class Event implements Serializable {
 		return new AtomLink(restUrl, "get-event");
 	}
 	
+	public void setLink(AtomLink link) {}
+	
 	public Event toDTO () {
 		Event eventToDTO = new Event (eventID, eventName, eventLocation, startDate, description, nrPlaces);
-		return eventToDTO;
-	}
-	public static Event toDTOAggregate(Event event) {
-		if(event == null) {
-			return null;
-		}
-		Event eventToDTO = event.toDTO();
-		List<Invitatie> invitationsToDTO = Invitatie.toDTOList(event.getInvitatie());
-		eventToDTO.setInvitatie(invitationsToDTO);
-		
 		return eventToDTO;
 	}
 	

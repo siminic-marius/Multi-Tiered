@@ -3,9 +3,11 @@ package org.app.service.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -15,8 +17,11 @@ public class Workshops extends Event implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5166575430470962345L;
+	
 	private Integer workshopId;
+	
 	private String titleWorkshop;
+	
 	private String materialsWorkshop;
 	
 	public Integer getWorkshopId() {

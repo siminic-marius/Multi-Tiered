@@ -34,9 +34,6 @@ public class Persoane implements Serializable{
 	
 	private String email;
 	
-	@ManyToMany(mappedBy="persoane")
-	private List<Rating> ratinguri = new ArrayList<>();
-	
 	@OneToMany(mappedBy = "persons", cascade = ALL, fetch = EAGER, orphanRemoval = false)
 	private List<Invitatie> invitatii = new ArrayList<>();
 	
@@ -80,8 +77,7 @@ public class Persoane implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@XmlElementWrapper(name = "invitatii")
-	@XmlElement(name="invitatie")
+	@XmlElementWrapper(name = "invitatii") @XmlElement(name="invitatie")
 	public List<Invitatie> getInvitatii() {
 		return invitatii;
 	}
@@ -89,19 +85,17 @@ public class Persoane implements Serializable{
 	public void setInvitatii(List<Invitatie> invitatii) {
 		this.invitatii = invitatii;
 	}
-	
-	public List<Rating> getRatinguri() {
-		return ratinguri;
-	}
-
-	public void setRatinguri(List<Rating> ratinguri) {
-		this.ratinguri = ratinguri;
-	}
 
 	public Persoane() {
 		super();
 	}
-
+	
+	public Persoane(Integer persoanaId, String name) {
+		super();
+		this.persoanaId = persoanaId;
+		this.name = name;
+	}
+	
 	public Persoane(Integer persoanaId, String name, String localitate, String sex, String email,
 			List<Invitatie> invitatii) {
 		super();
@@ -122,13 +116,6 @@ public class Persoane implements Serializable{
 		this.email = email;
 	}
 	
-	
-	
-	@Override
-	public String toString() {
-		return "Persoane [persoanaId=" + persoanaId + ", name=" + name + ", localitate=" + localitate + ", sex=" + sex
-				+ ", email=" + email + "]";
-	}
 
 	public static String BASE_URL = "http://localhost:8080/SCRUM/data/persons/";
 	
@@ -138,7 +125,10 @@ public class Persoane implements Serializable{
 		return new AtomLink(restUrl, "get-person");
 	}
 	
+	public void setLink(AtomLink link){}
+	
 	public Persoane toDto() {
 		return new Persoane (persoanaId, name, localitate, sex, email);
 	}
+
 }

@@ -25,7 +25,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("persons")
+@Path("persons123")
 @Stateless @LocalBean
 public class PersoaneServiceEJB extends EntityRepositoryBase<Persoane> implements PersoaneService{
 
@@ -127,7 +127,7 @@ public class PersoaneServiceEJB extends EntityRepositoryBase<Persoane> implement
 		
 		Integer invitationsCount = 5;
 		for(int i =0; i < invitationsCount; i++) {
-			invitationsPersons.add(new Invitatie(i + 525 , "I: " + persoane.getPersoanaId() + i, "Invitatie: " + i,  new Date(dataInvitatie.getTime() + i* interval), null,persoane));
+			invitationsPersons.add(new Invitatie(i + 525 , "I: " + persoane.getPersoanaId() + i, "Invitatie: " + i,  new Date(dataInvitatie.getTime() + i* interval),persoane));
 		}
 		persoane.setInvitatii(invitationsPersons);
 		

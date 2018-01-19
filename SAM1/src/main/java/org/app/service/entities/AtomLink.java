@@ -6,7 +6,9 @@ import java.net.URI;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name="atom:link")
 @XmlAccessorType(value = XmlAccessType.NONE)
 public class AtomLink implements Serializable{
 	/**

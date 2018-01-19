@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -78,15 +77,7 @@ public class RatingServiceEJB implements RatingService{
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })		
 	@Override
 	public Collection<Rating> getRatingBytitle(@PathParam("titleRating") String titleRating) {
-//		try {
-//			
-//		}
-//		catch(NoResultException nre) {
-//			
-//		}
-//		if(titleRating == null) {
-//			
-//		}
+		
 		return em.createQuery("SELECT r FROM Rating r where r.titleRating = :titleRating", Rating.class).setParameter("titleRating", titleRating).getResultList();
 	}
 

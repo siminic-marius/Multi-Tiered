@@ -22,14 +22,13 @@ public class Invitatie implements Serializable{
 	private static final long serialVersionUID = -2597204678077482480L;
 	@Id 
 	private Integer invitationId;
+	
 	private String titleInvitatie;
+	
 	private String messageInvitatie;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataInvitatie;
-	
-	@ManyToOne(cascade = ALL)
-	private Event event;
 	
 	@ManyToOne(cascade = ALL)
 	private Persoane persons;
@@ -66,14 +65,6 @@ public class Invitatie implements Serializable{
 	public void setDataInvitatie(Date dataInvitatie) {
 		this.dataInvitatie = dataInvitatie;
 	}
-	
-	public Event getEvent() {
-		return event;
-	}
-
-	public void setEvent(Event event) {
-		this.event = event;
-	}
 
 	public Persoane getPersons() {
 		return persons;
@@ -87,42 +78,23 @@ public class Invitatie implements Serializable{
 		super();
 	}
 	
-	
-	public Invitatie(Integer invitationId, String titleInvitatie, String messageInvitatie, Date dataInvitatie, Event event, Persoane persons) {
+	public Invitatie(Integer invitationId, String titleInvitatie, String messageInvitatie, Date dataInvitatie, Persoane persons) {
 		super();
 		this.invitationId = invitationId;
 		this.titleInvitatie = titleInvitatie;
 		this.messageInvitatie = messageInvitatie;
 		this.dataInvitatie = dataInvitatie;
-		this.event = event;
 		this.persons = persons;
 	}
-
-	
-	
+	// cu asta in RESTTTTTTTT
 	public Invitatie(Integer invitationId, Persoane persons) {
 		super();
 		this.invitationId = invitationId;
 		this.persons = persons;
 	}
-
-	@Override
-	public String toString() {
-		return "Invitation [invitationId=" + invitationId + ", titleInvitatie=" + titleInvitatie + ", persons=" + persons + "]";
-	}
-	
-	public static String BASE_URL = Persoane.BASE_URL;
-	
-	@XmlElement(name="link")
-	public AtomLink getLink() throws Exception {
-		String restUrl = BASE_URL +
-				this.getPersons().getPersoanaId() + "/invitatii/" + this.getinvitationId();
-		return new AtomLink(restUrl, "get-invitatie");
-		
-	}
 	
 	public Invitatie toDTO() {
-		return new Invitatie(invitationId, titleInvitatie, messageInvitatie, dataInvitatie, event.toDTO(), persons.toDto());
+		return new Invitatie(invitationId, titleInvitatie, messageInvitatie, dataInvitatie, persons.toDto());
 	}
 	
 	public static List<Invitatie> toDTOList(List<Invitatie> invitations){
@@ -133,4 +105,67 @@ public class Invitatie implements Serializable{
 		
 		return invitationsDTOList;
 	}
+	
+	public static String BASE_URL = Persoane.BASE_URL;
+	
+	@XmlElement(name="link")
+	public AtomLink getLink() throws Exception {
+		String restUrl = BASE_URL + ((this.getPersons() != null) ? this.getPersons().getPersoanaId() : "")
+				+ "/invitatii/" + this.getinvitationId();
+		return new AtomLink(restUrl, "get-invitatie");
+		
+	}
+	
+	public void setLink(AtomLink link){}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataInvitatie == null) ? 0 : dataInvitatie.hashCode());
+		result = prime * result + ((invitationId == null) ? 0 : invitationId.hashCode());
+		result = prime * result + ((messageInvitatie == null) ? 0 : messageInvitatie.hashCode());
+		result = prime * result + ((persons == null) ? 0 : persons.hashCode());
+		result = prime * result + ((titleInvitatie == null) ? 0 : titleInvitatie.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Invitatie other = (Invitatie) obj;
+		if (dataInvitatie == null) {
+			if (other.dataInvitatie != null)
+				return false;
+		} else if (!dataInvitatie.equals(other.dataInvitatie))
+			return false;
+		if (invitationId == null) {
+			if (other.invitationId != null)
+				return false;
+		} else if (!invitationId.equals(other.invitationId))
+			return false;
+		if (messageInvitatie == null) {
+			if (other.messageInvitatie != null)
+				return false;
+		} else if (!messageInvitatie.equals(other.messageInvitatie))
+			return false;
+		if (persons == null) {
+			if (other.persons != null)
+				return false;
+		} else if (!persons.equals(other.persons))
+			return false;
+		if (titleInvitatie == null) {
+			if (other.titleInvitatie != null)
+				return false;
+		} else if (!titleInvitatie.equals(other.titleInvitatie))
+			return false;
+		return true;
+	}
+	
+	
 }

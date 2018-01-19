@@ -3,9 +3,11 @@ package org.app.service.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -16,8 +18,11 @@ public class Presentations extends Event implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 5712138590642599420L;
+	
 	private Integer presentationId;
+	
 	private String speakerPresentation;
+	
 	private Integer nrSeats;
 	
 	public Integer getPresentationId() {

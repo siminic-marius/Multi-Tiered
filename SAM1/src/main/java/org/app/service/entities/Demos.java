@@ -2,9 +2,12 @@ package org.app.service.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -14,9 +17,13 @@ public class Demos extends Event implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6606142512483118372L;
+	
 	private Integer demosId;
+	
 	private String titleDemos;
+	
 	private String productDemos;
+	
 	private Double productVersionDemos;
 	
 	public Integer getDemosId() {

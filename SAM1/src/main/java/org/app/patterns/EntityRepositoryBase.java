@@ -278,6 +278,7 @@ public class EntityRepositoryBase<T extends Object> implements EntityRepository<
 	    return (Class<?>)((ParameterizedType)t).getRawType();
 	}
 
+	@SuppressWarnings("unchecked")
 	public Class<T> getEntityParametrizedType() throws ClassCastException {
 	    Class<?> superClass = getClass(); // initial value
 	    Type superType;

@@ -12,41 +12,32 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import org.app.patterns.EntityRepository;
-import org.app.service.ejb.Persoane1DataService;
-import org.app.service.ejb.PersoaneService;
 import org.app.service.entities.Persoane;
-import org.app.service.rest.ApplicationConfig;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-@RunWith(Arquillian.class)
+
+@RunWith(Arquillian.class) 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestPersoaneDataServiceRestArq {
-	private static Logger logger = Logger.getLogger(TestPersoaneDataServiceRestArq.class.getName());
-	
-	private static String serviceURL = "http://localhost:8080/msd-s4-test/data/persons";
+public class TestPersoaneDataServiceArqRemote {
+	private static Logger logger = Logger.getLogger(TestPersoaneDataServiceArqRemote.class.getName());
+
+//	 server_wildfly_web_url/deployment_archive_name/ApplicationConfig_@ApplicationPath/EJB_@Path
+	private static String serviceURL = "http://localhost:8080/SCRUM/data/persons";	
 	
 	@Deployment // Arquilian infrastructure
 	public static Archive<?> createDeployment() {
 	        return ShrinkWrap
 	                .create(WebArchive.class, "msd-s4-test.war")
-	                .addPackage(Persoane.class.getPackage())
-	                .addPackage(Persoane1DataService.class.getPackage())
-	                .addPackage(EntityRepository.class.getPackage())
-	                .addPackage(ApplicationConfig.class.getPackage())
-	                .addAsResource("META-INF/persistence.xml")
-	                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-	}
-	
+	                .addPackage(Persoane.class.getPackage()); // all mode by default
+	}	
 	@Test
 	public void test1_GetMessage() {
 		String resourceURL = serviceURL + "/test";
@@ -56,6 +47,17 @@ public class TestPersoaneDataServiceRestArq {
 				.readEntity(String.class);
 		assertNotNull("Data Service failed!", response);
 		logger.info("DEBUG: EJB Response ..." + response);
+	}
+
+	@Test
+	public void test4_GetProjects() {
+		logger.info("DEBUG: Junit TESTING: test4_GetProjects ...");
+		Collection<Persoane> persoane = ClientBuilder.newClient()
+				.target(serviceURL)
+				.request().get()
+				.readEntity(new GenericType<Collection<Persoane>>(){});
+		assertTrue("Fail to read Patients!", persoane.size() > 0);
+		persoane.stream().forEach(System.out::println);
 	}
 	
 	@Test
@@ -152,5 +154,32 @@ public class TestPersoaneDataServiceRestArq {
 		assertTrue("Fail to add Persoane!", persons.size() >= persoaneToAdd);
 		
 	}
+	
+	@Test
+	public void test7_UpdatePersoane() {
+		String resourceURL = serviceURL + "/2"; //create Event
+		logger.info("************* DEBUG: Junit TESTING: test5_UpdateEvent ... :" + resourceURL);
+		Client client = ClientBuilder.newClient();
+		// Get event
+		Persoane persoana = client.target(resourceURL)
+				.request().accept(MediaType.APPLICATION_JSON)
+				.get().readEntity(Persoane.class);
+		
+		assertNotNull("REST Data Service failed!", persoana);
+		logger.info(">>> Initial Event: " + persoana);
+		
+		// update and save event
+		persoana.setName(persoana.getPersoanaId()+ "testing JSON" );
+		persoana = client.target(resourceURL)
+				//.request().accept(MediaType.APPLICATION_XML).header("Content-Type", "application/xml")
+				.request().accept(MediaType.APPLICATION_JSON)
+				.put(Entity.entity(persoana, MediaType.APPLICATION_JSON))
+				.readEntity(Persoane.class);
+		
+		logger.info(">>> Updated persoana: " + persoana);
+		
+		assertNotNull("REST Data Service failed!", persoana);
+	}	
+
 
 }

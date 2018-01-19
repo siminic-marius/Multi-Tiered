@@ -18,10 +18,9 @@ public class EventFactory {
 		
 		for(int i = 0; i  <= 20 - 1; i++ ) {
 			eventInvitation.add(new Invitatie (null, "I: " + event.getEventID() + "." + 1, "X-mas invitation baby!" + i,
-					new Date (startEvent.getTime() + i * interval), event, null ));
+					new Date (startEvent.getTime() + i * interval), null ));
 		}
 		
-		event.setInvitatie(eventInvitation);
 		return event;
 		
 	}

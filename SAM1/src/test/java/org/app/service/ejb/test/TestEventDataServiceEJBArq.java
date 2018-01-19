@@ -1,4 +1,6 @@
 package org.app.service.ejb.test;
+import org.app.patterns.EntityRepository;
+import org.app.patterns.EntityRepositoryBase;
 import org.app.service.ejb.EventService;
 import org.app.service.ejb.EventServiceEJB;
 import org.app.service.entities.Event;
@@ -38,6 +40,8 @@ public class TestEventDataServiceEJBArq {
 				.addPackage(Event.class.getPackage())
 				.addClass(EventService.class)
 				.addClass(EventServiceEJB.class)
+				.addClass(EntityRepository.class)
+				.addClass(EntityRepositoryBase.class)
 				.addAsResource("META-INF/persistence.xml")
 				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -59,11 +63,11 @@ public class TestEventDataServiceEJBArq {
 		
 		Integer eventToAdd = 5;
 		for(int i = 0; i < eventToAdd; i++) {
-			service.addEvent(new Event (i, "Event: " + (i + 100), "Event: Iasi: " + (i + 100), 
+			service.add(new Event (i, "Event: " + (i + 100), "Event: Iasi: " + (i + 100), 
 					new Date(startDate.getTime() + i * interval), "Event -- " + (i + 100), 150 + i));
 		}
 		
-		Collection <Event> events = service.getEvents();
+		Collection <Event> events = service.toCollection();
 		assertTrue("Fail to add events!", events.size() == eventToAdd);
 	}
 	
@@ -71,7 +75,7 @@ public class TestEventDataServiceEJBArq {
 	public void test4_getEvents() {
 		logger.info("DEBUG: Junit TESTING: testgetEvent ...");
 		
-		Collection<Event> events = service.getEvents();
+		Collection<Event> events = service.toCollection();
 		assertTrue("Fail to read events!", events.size() > 0);
 	}
 	
@@ -79,11 +83,11 @@ public class TestEventDataServiceEJBArq {
 	public void test2_RemoveEvent() {
 		logger.info("DEBUG: Junit TESTING: testRemoveEvent ...");
 		
-		Collection<Event> events = service.getEvents();
+		Collection<Event> events = service.toCollection();
 		for(Event e: events) {
-			service.removeEvent(e);
+			service.remove(e);
 		}
-		Collection<Event> eventsAfterRemove = service.getEvents();
+		Collection<Event> eventsAfterRemove = service.toCollection();
 		assertTrue("Fail to read features!", eventsAfterRemove.size() == 0);
 	}
 	

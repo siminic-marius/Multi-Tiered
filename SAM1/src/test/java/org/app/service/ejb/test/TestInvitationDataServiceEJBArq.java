@@ -81,12 +81,8 @@ public class TestInvitationDataServiceEJBArq {
 					sexChoice = "F";
 				}
 				
-//				service.add(new Invitatie(i, "Invitatie Event Number: " + (80+i), "We invite you to our event: " + (80 + i), new Date (dataInvitatie.getTime() + i * numar), 
-//						new Event(i, "Event: " + (i + 100), "Event: Iasi: " + (i + 100), new Date(dataEvent.getTime() + i * numar), "Event -- " + (i + 100), 150 + i), 
-//						new Persoane(i + 111, "Persoana: " + (115+i), "Iasi: " + (80 + i), sexChoice, "persoana" + (10 + i) + "@gmail.com")));
-				
 				service.add(new Invitatie(i, "Invitatie Event Number: " + (80+i), "We invite you to our event: " + (80 + i), new Date (dataInvitatie.getTime() + i * numar), 
-						null, null));
+						 null));
 			}
 			
 			Collection<Invitatie> invitations = service.toCollection();
