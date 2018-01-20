@@ -17,35 +17,39 @@
 				<p:growl id="messages" showDetail="false" />
 				
 				<p:layoutUnit position="west" resizable="true" size="400">
-					<p:dataTable id="Event" var="event" 
-						value="#{persoaneViewController.persoane}"
-						sortBy="#{persoane.persoanaId}" 
+					<p:dataTable id="event" var="event" 
+						value="#{eventViewController.event}"
+						sortBy="#{event.eventID}" 
 						selectionMode="single" scrollable="true"
-						selection="#{persoaneViewController.selectedPersoane}" 
-						rowKey="#{persoane.persoanaId}" >
+						selection="#{eventViewController.event}" 
+						rowKey="#{event.eventID}" >
 						
-						<p:ajax event="rowSelect" listener="#{persoaneViewController.onRowSelect}" 
-							update=":form:persoanaId :form:name :form:localitate :form:sex :form:email"/>
+						<p:ajax event="rowSelect" listener="#{eventViewController.onRowSelect}" 
+							update=":form:event :form:eventName :form:eventLocation :form:startDate :form:description :form:nrPlaces"/>
 							
-						<f:facet name="header"> Persoane List</f:facet>
-						<p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}">
-							<h:outputText value="#{persoane.persoanaId}" />
+						<f:facet name="header"> Event List</f:facet>
+						<p:column headerText="Event" sortBy="#{event.eventID}">
+							<h:outputText value="#{event.eventID}" />
 						</p:column>
 	
-						<p:column headerText="Name" sortBy="#{persoane.name}">
-							<h:outputText value="#{persoane.name}" />
+						<p:column headerText="Name" sortBy="#{event.eventName}">
+							<h:outputText value="#{event.eventName}" />
 						</p:column>
 						
-						<p:column headerText="Name" sortBy="#{persoane.localitate}">
-							<h:outputText value="#{persoane.name}" />
+						<p:column headerText="Location" sortBy="#{event.eventLocation}">
+							<h:outputText value="#{event.eventLocation}" />
 						</p:column>
 						
-						<p:column headerText="Sex" sortBy="#{persoane.sex}">
-							<h:outputText value="#{persoane.email}" />
+						<p:column headerText="StartDate" sortBy="#{event.startDate}">
+							<h:outputText value="#{event.startDate}" />
 						</p:column>
 						
-						<p:column headerText="Email" sortBy="#{persoane.email}">
-							<h:outputText value="#{persoane.email}" />
+						<p:column headerText="Description" sortBy="#{event.description}">
+							<h:outputText value="#{event.description}" />
+						</p:column>
+						
+						<p:column headerText="Places" sortBy="#{event.nrPlaces}">
+							<h:outputText value="#{event.nrPlaces}" />
 						</p:column>
 						
 					</p:dataTable>				
@@ -55,30 +59,35 @@
 					<p:panelGrid columns="2">
 						<f:facet name="header">Persoane Information</f:facet>
 						
-						<h:outputLabel for="persoaneId" value="Persoane#" />
-						<p:inputText id="persoaneId" 
-							value="#{persoaneViewController.selectedPersoane.persoanaId}" label="persoaneId" />
+						<h:outputLabel for="eventID" value="Event#" />
+						<p:inputText id="eventID" 
+							value="#{eventViewController.selectedEvent.eventID}" label="eventID" />
 							
-						<h:outputLabel for="name" value="Person Name" />
-						<p:inputText id="name" 
-							value="#{persoaneViewController.selectedPersoane.name}" label="name"/>
+						<h:outputLabel for="eventName" value="Event Name" />
+						<p:inputText id="eventName"
+							value="#{eventViewController.selectedEvent.eventName}" label="eventName"/>
 							
-						<h:outputLabel for="localitate" value="Localitate" />
-						<p:inputText id="localitate" 
-							value="#{persoaneViewController.selectedPersoane.localitate}" label="startDate"/>
+						<h:outputLabel for="eventLocation" value="Location Event" />
+						<p:inputText id="eventLocation" 
+							value="#{eventViewController.selectedEvent.eventLocation}" label="eventLocation"/>
+						
+						<h:outputLabel for="startDate" value="Start Date" />
+						<p:calendar id="startDate" pattern="dd/MM/yyyy"
+							value="#{eventViewController.selectedEvent.startDate}" label="startDate"/>
 							
-						<h:outputLabel for="sex" value="Sex" />
-						<p:inputText id="sex"
-							value="#{persoaneViewController.selectedPersoane.sex}" label="startDate"/>
+						<h:outputLabel for="description" value="Description" />
+						<p:inputText id="description"
+							value="#{eventViewController.selectedEvent.description}" label="description"/>
 							
-						<h:outputLabel for="email" value="email" />
-						<p:inputText id="email" 
-							value="#{persoaneViewController.selectedPersoane.email}" label="email"/>
+						<h:outputLabel for="nrPlaces" value="Places" />
+						<p:inputText id="nrPlaces"
+							value="#{eventViewController.selectedEvent.nrPlaces}" label="nrPlaces"/>
+						
 								
 							
 						<f:facet name="footer">
 							<p:commandButton value="Save"
-								update="persoane" actionListener="#{persoaneViewController.saveSelectedPersoane()}"
+								update="persoane" actionListener="#{eventViewController.saveSelectedPersoane()}"
 								icon="ui-icon-check" style="margin:0"/>
 						</f:facet>
 					</p:panelGrid>

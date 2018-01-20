@@ -53,4 +53,11 @@
 		<nature>org.jboss.tools.cdi.core.cdinature</nature>
 		<nature>org.jboss.tools.jsf.jsfnature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/webapp/resources/Images/bigstock-events-7444309_1.jpg</name>
+			<type>1</type>
+			<location>C:/Users/theCollector/Desktop/bigstock-events-7444309_1.jpg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

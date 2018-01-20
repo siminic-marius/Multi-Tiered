@@ -17,8 +17,8 @@
 		<p:panelMenu style="width:200px">
 			<p:submenu label="Persoane">
 				<p:submenu label="Persoane Info">
-					<p:menuitem value="Persoane List" action="/views/PersoaneListFormSimple.xhtml" ajax="false" 
-						styleClass="#{view.viewId == '/views/PersoaneListFormSimple.xhtml' ? 'ui-state-active' : ''}"
+					<p:menuitem value="Persoane List" action="/forms/PersoaneListForm.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/forms/PersoaneListForm.xhtml.xhtml' ? 'ui-state-active' : ''}"
 						icon="ui-icon-info" />
 					<p:menuitem value="Persoane Filtrare" action="/views/PersoaneFiltrare.xhtml" ajax="false" 
 						styleClass="#{view.viewId == '/views/PersoaneFiltrare.xhtml' ? 'ui-state-active' : ''}"
@@ -29,7 +29,7 @@
 				</p:submenu>
 				
 				<p:submenu label="Persoane Invitatii">
-					<p:menuitem value="Persoane-Invitatii Simple" action="/PersoaneInvitatiiListView.xhtml" ajax="false" 
+					<p:menuitem value="Persoane-Invitatii Simple" action="/views/PersoaneInvitatiiListView.xhtml" ajax="false" 
 						styleClass="#{view.viewId == '/views/PersoaneInvitatiiListView.xhtml' ? 'ui-state-active' : ''}"
 						icon="ui-icon-info" />
 					
@@ -46,28 +46,13 @@
 					
 			</p:submenu>
 			<p:submenu label="Events">
-				<p:menuitem value="ShowSprints" ajax="false" icon="ui-icon-info"
-					action="/welcome.xhtml"
-					actionListener="#{menuViewController.showSprints}" update="messages" />
+				<p:menuitem value="EventsEdit" action="/views/EventsEditView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/EventsEditView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info"/> 
+						
 			</p:submenu>
 			<p:separator />
-			<p:submenu label="Primefaces Links">
-				<p:submenu label="Links" icon="ui-icon-extlink">
-					<p:submenu label="Prime Products">
-						<p:menuitem value="Prime UI" icon="ui-icon-home"
-							url="http://primefaces.org/primeui" />
-						<p:menuitem value="Prime Mobile" icon="ui-icon-signal"
-							url="http://primefaces.org/showcase/mobile/index.xhtml" />
-					</p:submenu>
-					<p:submenu label="Prime Resources">
-						<p:menuitem value="Docs" icon="ui-icon-document"
-							url="http://primefaces.org/documentation.html" />
-
-						<p:menuitem value="Download" icon="ui-icon-arrowthick-1-s"
-							url="http://primefaces.org/downloads.html" />
-					</p:submenu>
-				</p:submenu>
-			</p:submenu>
+			
 		</p:panelMenu>
 	</h:form>
 

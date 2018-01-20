@@ -38,9 +38,10 @@
 						
 					<f:facet name="footer">
 						<p:commandButton value="Save"
-							update="messages" actionListener="#{persoaneViewController.selectedPersoane}"
+							update="messages" actionListener="#{persoaneViewController.saveSelectedPersoane}"
 							icon="ui-icon-check" style="margin:0"/>
 					</f:facet>
+					
 				</p:panelGrid>
 				
 				<p:dataTable var="invitatie" value="#{persoaneViewController.selectedPersoane.invitatii}" 

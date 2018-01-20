@@ -17,15 +17,14 @@
 				<p:growl id="messages" showDetail="false" />
 				
 				<p:layoutUnit position="west" resizable="true" size="400">
-					<p:dataTable id="persoana" var="persoane" 
+					<p:dataTable id="persoane" var="persoane" 
 						value="#{persoaneViewController.persoane}"
 						sortBy="#{persoane.persoanaId}" 
 						selectionMode="single" scrollable="true"
 						selection="#{persoaneViewController.selectedPersoane}" 
 						rowKey="#{persoane.persoanaId}" >
-						
 						<p:ajax event="rowSelect" listener="#{persoaneViewController.onRowSelect}" 
-							update=":form:persoana :form:name :form:localitate :form:sex :form:email"/>
+							update=":form:persoane :form:name :form:localitate :form:sex :form:email"/>
 							
 						<f:facet name="header"> Persoane List</f:facet>
 						<p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}">
@@ -36,8 +35,8 @@
 							<h:outputText value="#{persoane.name}" />
 						</p:column>
 						
-						<p:column headerText="Name" sortBy="#{persoane.localitate}">
-							<h:outputText value="#{persoane.name}" />
+						<p:column headerText="Localitate" sortBy="#{persoane.localitate}">
+							<h:outputText value="#{persoane.localitate}" />
 						</p:column>
 						
 						<p:column headerText="Sex" sortBy="#{persoane.sex}">
@@ -55,11 +54,11 @@
 					<p:panelGrid columns="2">
 						<f:facet name="header">Persoane Information</f:facet>
 						
-						<h:outputLabel for="persoaneId" value="Persoane#" />
+						<h:outputLabel for="persoaneId" value="Persoane" />
 						<p:inputText id="persoaneId" 
 							value="#{persoaneViewController.selectedPersoane.persoanaId}" label="persoaneId" />
 							
-						<h:outputLabel for="name" value="Person Name" />
+						<h:outputLabel for="name" value="Persoane Name" />
 						<p:inputText id="name" 
 							value="#{persoaneViewController.selectedPersoane.name}" label="name"/>
 							
@@ -78,7 +77,7 @@
 							
 						<f:facet name="footer">
 							<p:commandButton value="Save"
-								update="persoane" actionListener="#{persoaneViewController.saveSelectedPersoane()}"
+								update="persoane" actionListener="#{persoaneViewController.saveSelectedPersoane}"
 								icon="ui-icon-check" style="margin:0"/>
 						</f:facet>
 					</p:panelGrid>

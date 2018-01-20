@@ -27,7 +27,7 @@
 					selection="#{persoaneViewController.selectedPersoane}" 
 					rowKey="#{persoane.persoanaId}" >
 					<p:ajax event="rowSelect" listener="#{persoaneViewController.onRowSelect}" 
-						update=":form:persoana :form:name :form:localitate :form:sex :form:email"/>
+						update=":form: :form:name :form:localitate :form:sex :form:email"/>
 					<f:facet name="header"> Persoane List</f:facet>
 					
 					<p:column headerText="Persoane#" sortBy="#{persoane.persoanaId}">
@@ -58,6 +58,7 @@
 			<p:layoutUnit id="layout_detail" position="center" resizable="true" >
 				<p:panelGrid columns="2">
 					<f:facet name="header">Persoane Information</f:facet>
+					
 					<h:outputLabel for="persoaneId" value="Persoane#" />
 					<p:inputText id="persoaneId" 
 						value="#{persoaneViewController.selectedPersoane.persoanaId}" label="persoaneId" />
