@@ -17,8 +17,8 @@
 		<p:panelMenu style="width:200px">
 			<p:submenu label="Persoane">
 				<p:submenu label="Persoane Info">
-					<p:menuitem value="Persoane List" action="/forms/PersoaneListForm.xhtml" ajax="false" 
-						styleClass="#{view.viewId == '/forms/PersoaneListForm.xhtml.xhtml' ? 'ui-state-active' : ''}"
+					<p:menuitem value="Persoane List" action="/views/PersoaneSimpleListView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneSimpleListView.xhtml' ? 'ui-state-active' : ''}"
 						icon="ui-icon-info" />
 					<p:menuitem value="Persoane Filtrare" action="/views/PersoaneFiltrare.xhtml" ajax="false" 
 						styleClass="#{view.viewId == '/views/PersoaneFiltrare.xhtml' ? 'ui-state-active' : ''}"
@@ -44,14 +44,39 @@
 						
 				</p:submenu>
 					
-			</p:submenu>
-			<p:submenu label="Events">
-				<p:menuitem value="EventsEdit" action="/views/EventsEditView.xhtml" ajax="false" 
-						styleClass="#{view.viewId == '/views/EventsEditView.xhtml' ? 'ui-state-active' : ''}"
+		</p:submenu>
+			<p:submenu label="Events Info">
+				<p:submenu label="Events">
+					<p:menuitem value="EventsEdit" action="/views/EventSimpleListView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/EventsSimpleListView.xhtml' ? 'ui-state-active' : ''}"
 						icon="ui-icon-info"/> 
 						
+					<p:menuitem value="Event Filtrare" action="/views/EventFiltrare.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/EventFiltrare.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-pencil" />
+						
+					<p:menuitem value="Persoane Update" action="/views/PersoaneEditView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneEditView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-pencil" />
+				</p:submenu>
+						
+				<p:submenu label="Persoane Invitatii">
+					<p:menuitem value="Persoane-Invitatii Simple" action="/views/EventSearchViewList.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/EventSearchViewList.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" />
+					
+					<p:menuitem value="Persoane-Invitatii Edit" action="/views/PersoaneInvitatiiEditView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/PersoaneInvitatiiEditView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" />
+					
+					<p:menuitem value="Persoane-Invitatii Filterable" action="/views/ProjectsReleaseListView.xhtml" ajax="false" 
+						styleClass="#{view.viewId == '/views/ProjectsReleaseListView.xhtml' ? 'ui-state-active' : ''}"
+						icon="ui-icon-info" 
+						actionListener="#{menuViewController.showFilterablePersons()}" update="messages"/>
+						
+				</p:submenu>
 			</p:submenu>
-			<p:separator />
+		<p:separator />
 			
 		</p:panelMenu>
 	</h:form>

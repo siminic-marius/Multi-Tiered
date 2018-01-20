@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+    <title>Event List View</title>
+</h:head>
+
+<h:body>
+    <h:form>
+		<p:dataTable 
+				var="event" widgetVar="events" 
+				value="#{eventViewController.event}" filteredValue="#{eventViewController.filteredEvents}"
+				sortBy="#{event.eventID}" 
+				style="margin-bottom:40px">
+	        <f:facet name="header">
+	            Event List: Filterable
+	        </f:facet>
+	        <p:column headerText="Event" sortBy="#{event.eventID}"
+	        		 filterBy="#{event.eventID}" filterMatchMode="contains" footerText="contains">
+	            <h:outputText value="#{event.eventID}" />
+	        </p:column>
+	        
+			<p:column headerText="Name" sortBy="#{event.eventName}"
+					filterBy="#{event.eventName}" filterMatchMode="contains" footerText="contains">
+	            <h:outputText value="#{event.eventName}" />
+	        </p:column>	 
+	        
+	        <p:column headerText="Location" sortBy="#{event.eventLocation}"
+					filterBy="#{event.eventLocation}" filterMatchMode="contains" footerText="contains">
+	            <h:outputText value="#{event.eventLocation}" />
+	        </p:column>
+	        
+	        <p:column headerText="Date" sortBy="#{event.startDate}"
+					filterBy="#{event.startDate}" filterMatchMode="contains" footerText="contains">
+	            <h:outputText value="#{event.startDate}" />
+	        </p:column>
+	        
+	        <p:column headerText="Places" sortBy="#{event.nrPlaces}"
+					filterBy="#{event.nrPlaces}" filterMatchMode="contains" footerText="contains">
+	            <h:outputText value="#{event.nrPlaces}" />
+	        </p:column>
+	    </p:dataTable>      
+    </h:form>
+    <div></div>
+</h:body>
+</html>

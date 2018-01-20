@@ -62,7 +62,7 @@ private static Logger logger = Logger.getLogger(PersoaneViewController.class.get
 			return filteredInvitatie;
 	}
 
-	public void setFilteredPersoane(List<Invitatie> filteredInvitatie) {
+	public void setFilteredInvitatii(List<Invitatie> filteredInvitatie) {
 		logger.info("filteredInvitatie ::: ");
 		if (filteredInvitatie != null)
 			filteredInvitatie.stream().forEach(p -> System.out.println(p.getTitleInvitatie()));

@@ -51,7 +51,7 @@ public class EventViewController implements Serializable{
 		return selectedEvent;
 	}
 	
-	public void setSelectedPersoane(Event selectedEvent) {
+	public void setSelectedEvents(Event selectedEvent) {
 		this.selectedEvent = selectedEvent;
 		System.out.println(">>> >>>> selectedEvent: " + this.selectedEvent);
 	}
@@ -95,12 +95,12 @@ public class EventViewController implements Serializable{
 			System.out.println(">>> >>>> onRowSelect:: selectedPersoane is: " + this.selectedEvent);
 		}
 		
-		public void saveSelectedPersoane(ActionEvent actionEvent) {
+		public void saveSelectedEvent(ActionEvent actionEvent) {
 	        addMessage("Saved selected project => " + this.selectedEvent.getEventName());
 	        this.restService.addPersoane(this.selectedEvent);
 	    }
 		
-		public void addNewPatient(ActionEvent actionEvent) {
+		public void addNewEvent(ActionEvent actionEvent) {
 			this.selectedEvent = this.restService.createEvent();
 			this.events = this.restService.getEvent();
 			addMessage("NEW persoane => " + this.selectedEvent.getEventID());

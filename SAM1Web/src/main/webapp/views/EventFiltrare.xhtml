@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+<ui:composition template="/templates/default_template.xhtml">
+	<ui:define name="head">
+		<!-- Test contents Comment Head-->
+	</ui:define>
+
+	<ui:define name="bodyContent">
+		<h:form>
+			<p:dataTable 
+					var="event" widgetVar="events" 
+					value="#{eventViewController.event}" filteredValue="#{eventViewController.filteredEvents}"
+					sortBy="#{event.eventID}" 
+					style="margin-bottom:40px">
+		        <f:facet name="header">
+		            Event List View: Filterable
+		        </f:facet>
+		        
+		        <p:column headerText="Event" sortBy="#{event.eventID}"
+		        		 filterBy="#{event.eventID}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{event.eventID}" />
+		        </p:column>
+		        
+				<p:column headerText="Event Name" sortBy="#{event.eventName}"
+						filterBy="#{event.eventName}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{event.eventName}" />
+		        </p:column>	
+		        
+		        <p:column headerText="Location" sortBy="#{event.eventLocation}"
+						filterBy="#{event.eventLocation}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{event.eventLocation}" />
+		        </p:column>	
+		        
+		        <p:column headerText="Description" sortBy="#{event.description}"
+						filterBy="#{event.description}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{event.description}" />
+		        </p:column>	 
+		        
+		        <p:column headerText="Date" sortBy="#{event.startDate}"
+						filterBy="#{event.startDate}" filterMatchMode="contains" footerText="contains">
+		            <h:outputText value="#{event.startDate}" />
+		        </p:column>	
+		              
+		    </p:dataTable>      
+	    </h:form>
+	</ui:define>
+
+	<ui:define name="rightPan">
+		<h:outputText value="PersoaneListView Right Panel" />
+	</ui:define>
+
+</ui:composition>
+</html>
